@@ -1,5 +1,6 @@
 package bookstore.web;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import bookstore.domain.BookRepository;
 
 @Controller
 public class BookController {
+
+    private boolean editing;
 
     @Autowired
     private BookRepository repository;
@@ -34,18 +37,20 @@ public class BookController {
     @GetMapping("/addbook")
     public String addBook(Model model) {
 
+        editing = false;
+        model.addAttribute("editing", editing);
         model.addAttribute("book", new Book());
 
         return "bookform";
 
     }
 
-    @PostMapping("/savebook")
-    public String saveBook(Book book) {
+    @PostMapping("/addbook")
+    public String saveBook(Book newbook) {
 
-        repository.save(book);
+            repository.save(newbook);
 
-        return "redirect:/booklist";
+            return "redirect:/booklist";
 
     }
 
@@ -53,6 +58,17 @@ public class BookController {
 	public String deleteBook(@PathVariable("id") Long bookId) {
 		repository.deleteById(bookId);
 		return "redirect:/booklist";
+
+	}
+
+    @GetMapping("/editbook/{id}")
+	public String editBook(@PathVariable("id") Long bookId, Model model) {
+		Optional<Book> bookToEdit = repository.findById(bookId);
+        editing = true;
+        model.addAttribute("editing", editing);
+        model.addAttribute("book", bookToEdit);
+
+		return "bookform";
 
 	}
 
