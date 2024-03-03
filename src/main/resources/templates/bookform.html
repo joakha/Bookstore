@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Book Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
 
     <h1 th:text="${editing ? 'Edit Book' : 'Add Book'}"></h1>
@@ -11,17 +13,32 @@
     <form method="post" action="#" th:action="@{/addbook}" th:object="${book}">
 
         <div>
-            <input type="hidden" id="id" th:field="*{id}"/>
-            <label for="author">Author: <input type="text" id="author" th:field="*{author}"/></label>
-            <label for="title">Title: <input type="text" id="title" th:field="*{title}"/></label>
-            <label for="publicationYear">Publication Year: <input type="text" id="publicationYear" th:field="*{publicationYear}"/></label>
-            <label for="isbn">ISBN: <input type="text" id="isbn" th:field="*{isbn}"/></label>
-            <label for="price">Price: <input type="text" id="price" th:field="*{price}"/></label>
+            <input type="hidden" id="id" th:field="*{id}" />
+            <label style="display:block; padding-bottom:10px" for="author">Author: <input type="text" id="author"
+                    th:field="*{author}" /></label>
+            <label style="display:block; padding-bottom:10px" for="title">Title: <input type="text" id="title"
+                    th:field="*{title}" /></label>
+            <label style="display:block; padding-bottom:10px" for="publicationYear">Publication Year: <input type="text"
+                    id="publicationYear" th:field="*{publicationYear}" /></label>
+            <label style="display:block; padding-bottom:10px" for="isbn">ISBN: <input type="text" id="isbn"
+                    th:field="*{isbn}" /></label>
+            <label style="display:block; padding-bottom:10px" for="price">Price: <input type="text" id="price"
+                    th:field="*{price}" /></label>
+            <label style="display:block; padding-bottom:10px" for="catlist">Category:
 
-            <input type="submit" value="Save"/>
+                <select id="catlist" th:field="*{category}">
+
+                    <option th:each="category : ${categories}" th:value="${category.categoryid}"
+                        th:text="${category.name}"></option>
+
+                </select></label>
+
+
+            <input type="submit" value="Save" />
         </div>
-        
+
     </form>
-    
+
 </body>
+
 </html>

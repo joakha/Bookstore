@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import bookstore.domain.Book;
 import bookstore.domain.BookRepository;
+import bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
@@ -17,6 +18,9 @@ public class BookController {
 
     @Autowired
     private BookRepository repository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @GetMapping("/index")
     public String showIndex(Model model) {
@@ -40,6 +44,7 @@ public class BookController {
         editing = false;
         model.addAttribute("editing", editing);
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRepository.findAll());
 
         return "bookform";
 
@@ -67,6 +72,7 @@ public class BookController {
         editing = true;
         model.addAttribute("editing", editing);
         model.addAttribute("book", bookToEdit);
+        model.addAttribute("categories", categoryRepository.findAll());
 
 		return "bookform";
 
