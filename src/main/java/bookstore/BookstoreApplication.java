@@ -35,8 +35,8 @@ public class BookstoreApplication {
 				log.info(category.toString());
 			}
 
-			Book example1 = new Book("Moby Dick", "Herman Melville", 1989, "12345678-9", 18.34);
-			Book example2 = new Book("Great Expectations", "Charles Dickens", 1992, "98765432-1", 25.00);
+			Book example1 = new Book("Moby Dick", "Herman Melville", 1989, "12345678-9", 18.34, secondRepository.findByName("Action").get(0));
+			Book example2 = new Book("Great Expectations", "Charles Dickens", 1992, "98765432-1", 25.00, secondRepository.findByName("Horror").get(0));
 
 			repository.save(example1);
 			repository.save(example2);
