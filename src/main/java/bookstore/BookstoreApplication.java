@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import bookstore.domain.Book;
 import bookstore.domain.BookRepository;
+import bookstore.domain.Category;
+import bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -19,8 +21,19 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner runner(BookRepository repository) {
+	public CommandLineRunner runner(BookRepository repository, CategoryRepository secondRepository) {
 		return (args) -> {
+
+			Category firstCategory = new Category("Action");
+			Category secondCategory = new Category("Horror");
+
+			secondRepository.save(firstCategory);
+			secondRepository.save(secondCategory);
+
+			log.info("fetch all categories");
+			for (Category category : secondRepository.findAll()) {
+				log.info(category.toString());
+			}
 
 			Book example1 = new Book("Moby Dick", "Herman Melville", 1989, "12345678-9", 18.34);
 			Book example2 = new Book("Great Expectations", "Charles Dickens", 1992, "98765432-1", 25.00);
