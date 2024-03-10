@@ -1,5 +1,6 @@
 package bookstore.web;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import bookstore.domain.Book;
 import bookstore.domain.BookRepository;
 import bookstore.domain.CategoryRepository;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class BookController {
@@ -36,6 +40,21 @@ public class BookController {
 
         return "booklist";
 
+    }
+
+    @GetMapping("/books")
+    public @ResponseBody List<Book> bookListRest() {
+        return (List<Book>) repository.findAll();
+    }
+    
+    @GetMapping("/book/{id}")
+    public @ResponseBody Optional<Book> findBookRest(@PathVariable("id") Long id) {
+        return repository.findById(id);
+    }
+
+    @PostMapping("/addBookRest")
+    public @ResponseBody Book saveBookRest(@RequestBody Book book) {
+        return repository.save(book);
     }
 
     @GetMapping("/addbook")
